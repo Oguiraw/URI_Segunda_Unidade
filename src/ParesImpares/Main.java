@@ -29,8 +29,9 @@ public class Main {
 		int[] pares = new int[contPares];
 
 		sepadarNumeros(numeros, impares, contImpares, pares, contPares);
-		InsertionSort(impares);
-		InsertionSort(pares);
+		
+		quickSort(impares, 0, impares.length -1);
+		quickSort(pares, 0, pares.length -1);
 
 		for (int i : pares) {
 			System.out.println(i);
@@ -56,16 +57,33 @@ public class Main {
 		}
 	}
 
-	public static void InsertionSort(int[] vetor) {
-		int i, j, eleito;
-		for (i = 1; i < vetor.length; i++) {
-			eleito = vetor[i];
-			j = i;
-			while ((j > 0) && (vetor[j - 1] > eleito)) {
-				vetor[j] = vetor[j - 1];
-				j = j - 1;
-			}
-			vetor[j] = eleito;
+
+	private static void quickSort(int [] vetor, int inicio, int fim){
+		if(inicio < fim){
+			int posicaoPivo = separar(vetor, inicio, fim);
+			quickSort(vetor, inicio, posicaoPivo - 1);
+			quickSort(vetor, posicaoPivo + 1, fim);
 		}
+	}
+	
+	private static int separar(int[] vetor, int inicio, int fim){
+		int pivo = vetor[inicio];
+		int i = inicio + 1, f = fim;
+		
+		while(i <= f){
+			if(vetor[i] <= pivo){
+				i++;
+			}else if(pivo < vetor[f]){
+				f--;
+			}else{
+				int troca = vetor[i];
+				vetor[i] = vetor[f];
+				vetor[f] = troca;
+				i++;
+				f--;
+			}
+		}vetor[inicio] = vetor[f];
+		vetor[f] = pivo;
+		return f;
 	}
 }
