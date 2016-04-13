@@ -2,7 +2,7 @@ package Camisetas;
 
 import java.util.Scanner;
 
-public class Main {
+public class teste {
 
 	public static void main(String[] args) {
 
@@ -31,8 +31,12 @@ public class Main {
 			mostrarResultado(camisasBrancas);
 			mostrarResultado(camisasVermelhas);
 			quantCamisas = Integer.parseInt(ler.nextLine());
+			if(quantCamisas != 0){
+				System.out.println("");
+				}
 		} // fim do while
 		ler.close();
+		
 	}
 
 	public static void mostrarResultado(Camisa[] camisas) {
@@ -41,25 +45,9 @@ public class Main {
 		while (teste) {
 			teste = false;
 			for (int x = 0; x < camisas.length - 1; x++) {
-				if ((camisas[x].getTamanho().equalsIgnoreCase("g"))
-						&& (camisas[x + 1].getTamanho().equalsIgnoreCase("m"))) {
+				if (!(compararNome(camisas[x].toString(), camisas[x + 1].toString()))) {
 					trocaPosicoes(camisas, x);
 					teste = true;
-				} else if ((camisas[x].getTamanho().equalsIgnoreCase("m"))
-						&& (camisas[x + 1].getTamanho().equalsIgnoreCase("p"))) {
-					trocaPosicoes(camisas, x);
-					teste = true;
-				} else if ((camisas[x].getTamanho().equalsIgnoreCase("g"))
-						&& (camisas[x + 1].getTamanho().equalsIgnoreCase("p"))) {
-					trocaPosicoes(camisas, x);
-					teste = true;
-				}
-
-				if (camisas[x].getTamanho().equalsIgnoreCase(camisas[x + 1].getTamanho())) {
-					if (compararNome(camisas[x].getNomeComprador(), camisas[x + 1].getNomeComprador())) {
-						trocaPosicoes(camisas, x);
-						teste = true;
-					}
 				}
 			}
 		}
