@@ -149,7 +149,7 @@ public class Main {
 
 		@Override
 		public String toString() {
-			return (cor + " " + tamanho.toUpperCase() + " " + nomeComprador);
+			return (cor + " " + tamanho + " " + nomeComprador);
 		}
 	}// fim da class Camisa;
 }
