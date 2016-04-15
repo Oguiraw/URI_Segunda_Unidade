@@ -1,35 +1,30 @@
 package Camisetas;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-
+		
 		Scanner ler = new Scanner(System.in);
 		int quantCamisas = Integer.parseInt(ler.nextLine());
 
 		while (quantCamisas != 0) {
-			int contBrancas = 0;
-			int contVermelhas = 0;
-
-			Camisa[] camisas = new Camisa[quantCamisas];
+			
+			ArrayList<Camisa> camisas = new ArrayList<Camisa>();
+			
 			for (int x = 0; x < quantCamisas; x++) {
 				String nomeComprador = ler.nextLine();
 				String[] dadosCamisa = ler.nextLine().split(" ");
-				camisas[x] = (new Camisa(dadosCamisa[0], dadosCamisa[1], nomeComprador));
-				if (dadosCamisa[0].equalsIgnoreCase("branco")) {
-					contBrancas++;
-				} else if (dadosCamisa[0].equalsIgnoreCase("vermelho")) {
-					contVermelhas++;
-				}
+				Camisa c = new Camisa (dadosCamisa[0], dadosCamisa[1], nomeComprador);
+				c.trocarTamanho();
+				camisas.add(c);
 			}
-
-			Camisa[] camisasBrancas = new Camisa[contBrancas];
-			Camisa[] camisasVermelhas = new Camisa[contVermelhas];
-			separaCamisasPorCor(camisas, camisasBrancas, camisasVermelhas);
-			mostrarResultado(camisasBrancas);
-			mostrarResultado(camisasVermelhas);
+			
+			Collections.sort(camisas);
+			mostrarResultado(camisas);
 			quantCamisas = Integer.parseInt(ler.nextLine());
 			if (quantCamisas != 0) {
 				System.out.println("");
@@ -39,84 +34,13 @@ public class Main {
 
 	}
 
-	public static void mostrarResultado(Camisa[] camisas) {
+	public static void mostrarResultado(ArrayList<Camisa> camisas) {
 
-		boolean teste = true;
-		while (teste) {
-			teste = false;
-			for (int x = 0; x < camisas.length - 1; x++) {
-				if (compararNome(camisas[x].toString(), camisas[x + 1].toString())) {
-					trocaPosicoes(camisas, x);
-					teste = true;
-				}
-			}
-		}
 		for (Camisa c : camisas) {
+			c.retornarTamanhoOriginal();
 			System.out.println(c.toString());
 		}
 	}
-
-	public static boolean compararNome(String nomeA, String nomeB) {
-		String[] nome1 = nomeA.split("");
-		String[] nome2 = nomeB.split("");
-		trocaTamanho(nome1);
-		trocaTamanho(nome2);
-
-		int tamanho;
-
-		if (nome1.length > nome2.length) {
-			tamanho = nome2.length;
-		} else {
-			tamanho = nome1.length;
-		}
-
-		for (int x = 0; x < tamanho; x++) {
-			if (nome1[x].charAt(0) > nome2[x].charAt(0)) {
-				return true;
-			} else if (nome1[x].charAt(0) < nome2[x].charAt(0)) {
-				return false;
-			} else if (nome1[x].toUpperCase().charAt(0) == nome2[x].toUpperCase().charAt(0)) {
-				if (Character.isUpperCase(nome1[x].charAt(0))) {
-					return false;
-				} else if (Character.isUpperCase(nome2[x].charAt(0))) {
-					return true;
-				}
-
-			}
-		}
-		return false;
-	}
-
-	public static void trocaTamanho(String[] entrada) {
-		for (int x = 0; x < entrada.length; x++) {
-			if (entrada[x].equalsIgnoreCase(" ")) {
-				if (entrada[x + 1].equalsIgnoreCase("p")) {
-					entrada[x + 1] = "A";
-					return;
-				} else if (entrada[x + 1].equalsIgnoreCase("m")) {
-					entrada[x + 1] = "B";
-					return;
-				} else {
-					return;
-				}
-			}
-		}
-	}
-
-	public static void separaCamisasPorCor(Camisa[] camisas, Camisa[] camisasBrancas, Camisa[] camisasVermelhas) {
-		int contBrancas = 0;
-		int contVermelhas = 0;
-
-		for (Camisa c : camisas) {
-			if (c.getCor().equalsIgnoreCase("branco")) {
-				camisasBrancas[contBrancas] = c;
-				contBrancas++;
-			} else {
-				camisasVermelhas[contVermelhas] = c;
-				contVermelhas++;
-			}
-		}
-	}// fim separa Camisas Por Cor
 
 	public static void trocaPosicoes(Camisa[] camisas, int x) {
 		Camisa aux = camisas[x];
@@ -124,7 +48,7 @@ public class Main {
 		camisas[x + 1] = aux;
 	}
 
-	public static class Camisa {
+	public static class Camisa implements Comparable<Camisa> {
 		private String cor;
 		private String tamanho;
 		private String nomeComprador;
@@ -134,6 +58,12 @@ public class Main {
 			this.tamanho = tamanho;
 			this.nomeComprador = nomeComprador;
 		}
+		
+
+		public void setTamanho(String tamanho) {
+			this.tamanho = tamanho;
+		}
+
 
 		public String getCor() {
 			return cor;
@@ -150,6 +80,54 @@ public class Main {
 		@Override
 		public String toString() {
 			return (cor + " " + tamanho + " " + nomeComprador);
+		}
+		
+		public void trocarTamanho(){
+			if(this.tamanho.equalsIgnoreCase("p")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("a");
+				}else{
+					this.setTamanho("A");
+				}
+			}else if(this.tamanho.equalsIgnoreCase("m")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("b");
+				}else{
+					this.setTamanho("B");
+				}
+			}else if(this.tamanho.equalsIgnoreCase("g")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("c");
+				}else{
+					this.setTamanho("C");
+				}
+			}
+		}
+
+		public void retornarTamanhoOriginal(){
+			if(this.tamanho.equalsIgnoreCase("a")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("p");
+				}else{
+					this.setTamanho("P");
+				}
+			}else if(this.tamanho.equalsIgnoreCase("b")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("m");
+				}else{
+					this.setTamanho("M");
+				}
+			}else if(this.tamanho.equalsIgnoreCase("c")){
+				if(Character.isUpperCase(this.tamanho.charAt(0))){
+					this.setTamanho("g");
+				}else{
+					this.setTamanho("G");
+				}
+			}
+		}
+		@Override
+		public int compareTo(Camisa camisa) {
+			return this.toString().compareTo(camisa.toString());
 		}
 	}// fim da class Camisa;
 }
