@@ -23,101 +23,61 @@ public class Main {
 
 	public static void escolherDesempregado(int[] lista, int pulosA, int pulosB) {
 		int selecionadoPulosA = 0;
-		int selecionadoPulosB = 0;
+		int selecionadoPulosB = lista.length - 1;
 		while (quantPessoas(lista) != 0) {
 
 			int contPulos = 0;
-			while (contPulos != pulosA) {
-				for (int i = selecionadoPulosA; i < lista.length; i++) {
-					if (lista[i] != 0) {
-						contPulos++;
-						if (contPulos == pulosA) {
-							selecionadoPulosA = i + 1;
-							break;
-						}
-						if (selecionadoPulosA == lista.length - 1) {
-							selecionadoPulosA = 0;
-						}
+
+			if (selecionadoPulosA == lista.length - 1)
+				selecionadoPulosA = 0;
+			for (int i = selecionadoPulosA; i < lista.length; i++) {
+				if (lista[i] != 0) {
+					contPulos++;
+					if (contPulos == pulosA) {
+						selecionadoPulosA = i;
+						break;
+					}
+					if (i == lista.length - 1) {
+						i = 0;
 					}
 				}
 			}
+
 			contPulos = 0;
-			boolean testeParaMudarValorDoBSelecionado = true;
-			while (contPulos != pulosB) {
-				if (testeParaMudarValorDoBSelecionado) selecionadoPulosB = selecionarValorDeB(selecionadoPulosB, lista.length);
-				for (int i = selecionadoPulosB; i >= 0; i--) {
-					if (lista[i] != 0) {
-						contPulos++;
-						if (contPulos == pulosB) {
-							selecionadoPulosB = i + 1;
-							break;
-						}
-						if (selecionadoPulosB == 0) {
-							testeParaMudarValorDoBSelecionado = false;
-							selecionadoPulosB = lista.length - 1;
-						}
+			if (selecionadoPulosB == 0)
+				selecionadoPulosB = lista.length - 1;
+			for (int i = selecionadoPulosB; i >= 0; i--) {
+				if (lista[i] != 0) {
+					contPulos++;
+					if (contPulos == pulosB) {
+						selecionadoPulosB = i;
+						break;
+					}
+					if (i == 0) {
+						i = lista.length - 1;
 					}
 				}
 			}
 
 			if (selecionadoPulosA == selecionadoPulosB) {
-				removerDesempregado(lista, selecionadoPulosA);
-				System.out.println(selecionadoPulosA);
+				lista[selecionadoPulosA] = 0;
+				System.out.println(selecionadoPulosA + 1);
 			} else {
-				removerDesempregado(lista, selecionadoPulosA, selecionadoPulosB);
-				System.out.println(selecionadoPulosA);
-				System.out.println(selecionadoPulosB);
+				lista[selecionadoPulosA] = 0;
+				System.out.println(selecionadoPulosA + 1);
+				lista[selecionadoPulosB] = 0;
+				System.out.println(selecionadoPulosB - 1);
 			}
 		}
 
 	}
 
 	public static int quantPessoas(int[] lista) {
-		int quant = 0;
 		for (int i : lista) {
 			if (i != 0) {
-				quant += 1;
+				return 1;
 			}
 		}
-		return quant;
-	}
-
-	public static void removerDesempregado(int[] lista, int desempregado) {
-		for (int x = 0; x < lista.length; x++) {
-			if (lista[x] == desempregado) {
-				lista[x] = 0;
-				return;
-			}
-		}
-	}
-
-	public static void removerDesempregado(int[] lista, int desempregado1, int desempregado2) {
-		int teste = 0;
-		for (int x = 0; x < lista.length; x++) {
-			if (lista[x] == desempregado1) {
-				lista[x] = 0;
-				teste++;
-			}
-			if (lista[x] == desempregado2) {
-				lista[x] = 0;
-				teste++;
-			}
-
-			if (teste == 2) {
-				return;
-			}
-		}
-	}
-
-	public static int selecionarValorDeB(int valor, int lengthLista) {
-		if (valor == 0) {
-			return lengthLista - 1;
-		} else if (valor == 1) {
-			return lengthLista - 1;
-		} else if (valor == 0) {
-			return lengthLista - 2;
-		} else {
-			return valor - 2;
-		}
+		return 0;
 	}
 }
