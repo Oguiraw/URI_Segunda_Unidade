@@ -23,8 +23,9 @@ public class Main {
 
 	public static void escolherDesempregado(int[] lista, int pulosA, int pulosB) {
 		int selecionadoPulosA = 0;
-		int selecionadoPulosB = lista.length-1;
+		int selecionadoPulosB = 0;
 		while (quantPessoas(lista) != 0) {
+
 			int contPulos = 0;
 			while (contPulos != pulosA) {
 				for (int i = selecionadoPulosA; i < lista.length; i++) {
@@ -34,23 +35,26 @@ public class Main {
 							selecionadoPulosA = i + 1;
 							break;
 						}
-						if(selecionadoPulosA == lista.length-1){
-							selecionadoPulosA = 0; 
+						if (selecionadoPulosA == lista.length - 1) {
+							selecionadoPulosA = 0;
 						}
 					}
 				}
 			}
 			contPulos = 0;
+			boolean testeParaMudarValorDoBSelecionado = true;
 			while (contPulos != pulosB) {
+				if (testeParaMudarValorDoBSelecionado) selecionadoPulosB = selecionarValorDeB(selecionadoPulosB, lista.length);
 				for (int i = selecionadoPulosB; i >= 0; i--) {
 					if (lista[i] != 0) {
 						contPulos++;
 						if (contPulos == pulosB) {
-							selecionadoPulosB = i+1;
+							selecionadoPulosB = i + 1;
 							break;
 						}
-						if(selecionadoPulosB == lista.length-1){
-							selecionadoPulosB = 0;
+						if (selecionadoPulosB == 0) {
+							testeParaMudarValorDoBSelecionado = false;
+							selecionadoPulosB = lista.length - 1;
 						}
 					}
 				}
@@ -67,11 +71,11 @@ public class Main {
 		}
 
 	}
-	
-	public static int quantPessoas(int[] lista){
+
+	public static int quantPessoas(int[] lista) {
 		int quant = 0;
-		for(int i : lista){
-			if(i != 0){
+		for (int i : lista) {
+			if (i != 0) {
 				quant += 1;
 			}
 		}
@@ -87,8 +91,7 @@ public class Main {
 		}
 	}
 
-	public static void removerDesempregado(int[] lista, int desempregado1,
-			int desempregado2) {
+	public static void removerDesempregado(int[] lista, int desempregado1, int desempregado2) {
 		int teste = 0;
 		for (int x = 0; x < lista.length; x++) {
 			if (lista[x] == desempregado1) {
@@ -103,6 +106,18 @@ public class Main {
 			if (teste == 2) {
 				return;
 			}
+		}
+	}
+
+	public static int selecionarValorDeB(int valor, int lengthLista) {
+		if (valor == 0) {
+			return lengthLista - 1;
+		} else if (valor == 1) {
+			return lengthLista - 1;
+		} else if (valor == 0) {
+			return lengthLista - 2;
+		} else {
+			return valor - 2;
 		}
 	}
 }
