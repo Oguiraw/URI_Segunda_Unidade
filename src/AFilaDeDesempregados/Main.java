@@ -22,51 +22,58 @@ public class Main {
 	}
 
 	public static void escolherDesempregado(int[] lista, int pulosA, int pulosB) {
-		int selecionadoPulosA = 0;
-		int selecionadoPulosB = lista.length - 1;
+		int puloSelecionadoA = 0;
+		int PuloselecionadoB = lista.length - 1;
+
 		while (quantPessoas(lista) != 0) {
-
 			int contPulos = 0;
+			int cont = puloSelecionadoA;
 
-			if (selecionadoPulosA == lista.length - 1)
-				selecionadoPulosA = 0;
-			for (int i = selecionadoPulosA; i < lista.length; i++) {
-				if (lista[i] != 0) {
+			while (contPulos != pulosA) {
+				if (lista[cont] != 0) {
 					contPulos++;
-					if (contPulos == pulosA) {
-						selecionadoPulosA = i;
-						break;
-					}
-					if (i == lista.length - 1) {
-						i = 0;
-					}
+				}
+
+				if (contPulos == pulosA) {
+					puloSelecionadoA = lista[cont];
+					break;					
+				}
+
+				if (cont == (lista.length - 1)) {
+					cont = 0;
+				}else{
+					cont ++;
 				}
 			}
-
+			
 			contPulos = 0;
-			if (selecionadoPulosB == 0)
-				selecionadoPulosB = lista.length - 1;
-			for (int i = selecionadoPulosB; i >= 0; i--) {
-				if (lista[i] != 0) {
+			cont = PuloselecionadoB;
+			while (contPulos != pulosB) {
+				if (lista[cont] != 0) {
 					contPulos++;
-					if (contPulos == pulosB) {
-						selecionadoPulosB = i;
-						break;
-					}
-					if (i == 0) {
-						i = lista.length - 1;
-					}
+				}
+
+				if (contPulos == pulosB) {
+					PuloselecionadoB = lista[cont];
+					break;
+				}
+
+				if (cont == 0) {
+					cont = lista.length -1;
+				}else{
+					cont --;
 				}
 			}
 
-			if (selecionadoPulosA == selecionadoPulosB) {
-				lista[selecionadoPulosA] = 0;
-				System.out.println(selecionadoPulosA + 1);
+
+			if (puloSelecionadoA == PuloselecionadoB) {
+				lista[puloSelecionadoA] = 0;
+				System.out.println(puloSelecionadoA + 1);
 			} else {
-				lista[selecionadoPulosA] = 0;
-				System.out.println(selecionadoPulosA + 1);
-				lista[selecionadoPulosB] = 0;
-				System.out.println(selecionadoPulosB - 1);
+				lista[puloSelecionadoA] = 0;
+				System.out.println(puloSelecionadoA + 1);
+				lista[PuloselecionadoB] = 0;
+				System.out.println(PuloselecionadoB - 1);
 			}
 		}
 
