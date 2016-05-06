@@ -76,11 +76,11 @@ public class Main {
 
 			if (puloSelecionadoA == PuloselecionadoB) {
 				lista[puloSelecionadoA] = -1;
-				resultado += " " + (preparaString(puloSelecionadoA +1)) + ",";
+				resultado += (preparaString(puloSelecionadoA +1)) + ",";
 			} else {
 				lista[puloSelecionadoA] = -1;
 				lista[PuloselecionadoB] = -1;
-				resultado += " " + (preparaString(puloSelecionadoA +1)) + (preparaString(PuloselecionadoB +1)) + ",";
+				resultado += (preparaString(puloSelecionadoA +1)) + (preparaString(PuloselecionadoB +1)) + ",";
 			}
 		}
 
